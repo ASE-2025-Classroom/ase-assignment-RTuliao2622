@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOOSEapp", "BOOSEapp.csproj", "{86BDE5FF-0805-1EEE-9600-FDD7BB9960EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86BDE5FF-0805-1EEE-9600-FDD7BB9960EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BDE5FF-0805-1EEE-9600-FDD7BB9960EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BDE5FF-0805-1EEE-9600-FDD7BB9960EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BDE5FF-0805-1EEE-9600-FDD7BB9960EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14D34E61-8B8B-43C1-B107-FC7C44653CF8}
+	EndGlobalSection
+EndGlobal
