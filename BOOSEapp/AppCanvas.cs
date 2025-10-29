@@ -30,8 +30,10 @@ namespace BOOSEApp
         private Graphics graphics;
 
         /// <summary>
-        /// Initializes a new canvas with the specified dimensions.
+        /// Initializes a new instance of the <see cref="AppCanvas"/> class with the specified dimensions.
         /// </summary>
+        /// <param name="width">The width of the canvas in pixels.</param>
+        /// <param name="height">The height of the canvas in pixels.</param>
         public AppCanvas(int width, int height)
         {
             bitmap = new Bitmap(width, height);
@@ -41,8 +43,10 @@ namespace BOOSEApp
         }
 
         /// <summary>
-        /// Draws a circle at the current position.
+        /// Draws a circle at the current pen position.
         /// </summary>
+        /// <param name="radius">The radius of the circle.</param>
+        /// <param name="filled">Whether the circle should be filled.</param>
         public void Circle(int radius, bool filled)
         {
             var rect = new Rectangle(xpos - radius, ypos - radius, radius * 2, radius * 2);
@@ -71,8 +75,10 @@ namespace BOOSEApp
         }
 
         /// <summary>
-        /// Draws a line from the current position to the specified coordinates.
+        /// Draws a line from the current pen position to the specified coordinates.
         /// </summary>
+        /// <param name="x">The X coordinate to draw to.</param>
+        /// <param name="y">The Y coordinate to draw to.</param>
         public void DrawTo(int x, int y)
         {
             using (var pen = new Pen(penColour))
@@ -86,6 +92,7 @@ namespace BOOSEApp
         /// <summary>
         /// Gets the current bitmap.
         /// </summary>
+        /// <returns>The bitmap containing all drawn content.</returns>
         public object getBitmap()
         {
             return bitmap;
@@ -94,6 +101,8 @@ namespace BOOSEApp
         /// <summary>
         /// Moves the pen to a new position without drawing.
         /// </summary>
+        /// <param name="x">The new X position.</param>
+        /// <param name="y">The new Y position.</param>
         public void MoveTo(int x, int y)
         {
             xpos = x;
@@ -101,8 +110,11 @@ namespace BOOSEApp
         }
 
         /// <summary>
-        /// Draws a rectangle at the current position.
+        /// Draws a rectangle at the current pen position.
         /// </summary>
+        /// <param name="width">The width of the rectangle.</param>
+        /// <param name="height">The height of the rectangle.</param>
+        /// <param name="filled">Whether the rectangle should be filled.</param>
         public void Rect(int width, int height, bool filled)
         {
             var rect = new Rectangle(xpos, ypos, width, height);
@@ -123,7 +135,7 @@ namespace BOOSEApp
         }
 
         /// <summary>
-        /// Resets the pen position and colour.
+        /// Resets the pen position and the pen colour.
         /// </summary>
         public void Reset()
         {
@@ -135,6 +147,8 @@ namespace BOOSEApp
         /// <summary>
         /// Resizes the canvas.
         /// </summary>
+        /// <param name="width">The new width of the canvas.</param>
+        /// <param name="height">The new height of the canvas.</param>
         public void Set(int width, int height)
         {
             graphics.Dispose();
@@ -149,14 +163,19 @@ namespace BOOSEApp
         /// <summary>
         /// Sets the pen colour using RGB values.
         /// </summary>
+        /// <param name="red">Red component (0–255).</param>
+        /// <param name="green">Green component (0–255).</param>
+        /// <param name="blue">Blue component (0–255).</param>
         public void SetColour(int red, int green, int blue)
         {
             penColour = Color.FromArgb(red, green, blue);
         }
 
         /// <summary>
-        /// Draws a triangle at the current position.
+        /// Draws a triangle at the current pen position.
         /// </summary>
+        /// <param name="width">The width of the triangle base.</param>
+        /// <param name="height">The height of the triangle.</param>
         public void Tri(int width, int height)
         {
             Point[] points = new Point[]
@@ -172,8 +191,9 @@ namespace BOOSEApp
         }
 
         /// <summary>
-        /// Writes text at the current position.
+        /// Writes text at the current pen position using the current pen colour.
         /// </summary>
+        /// <param name="text">The text to write.</param>
         public void WriteText(string text)
         {
             using (var font = new Font("Arial", 20))
