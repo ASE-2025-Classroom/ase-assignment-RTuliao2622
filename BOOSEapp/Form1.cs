@@ -6,14 +6,25 @@ namespace BOOSEapp
 {
     public partial class Form1 : Form
     {
+        private AppCanvas canvas;
         public Form1()
         {
             InitializeComponent();
             Debug.WriteLine(AboutBOOSE.about());
 
-            var canvas = new AppCanvas(this.ClientSize.Width, this.ClientSize.Height);
+            canvas = new AppCanvas(canvasBox.ClientSize.Width, canvasBox.ClientSize.Height);
+            canvasBox.Image = (Bitmap)canvas.getBitmap();
+        }
 
-            canvas.SetColour(255, 0, 0); 
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            canvas.Clear();
+            canvasBox.Image = (Bitmap)canvas.getBitmap();
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            canvas.SetColour(255, 0, 0);
             canvas.MoveTo(150, 150);
             canvas.Circle(50, true);
 
@@ -25,7 +36,7 @@ namespace BOOSEapp
             canvas.MoveTo(50, 250);
             canvas.WriteText("Red Circle, Blue Line");
 
-            this.BackgroundImage = (Bitmap)canvas.getBitmap();
+            canvasBox.Image = (Bitmap)canvas.getBitmap();
         }
     }
 }
