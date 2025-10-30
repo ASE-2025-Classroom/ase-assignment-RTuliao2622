@@ -11,10 +11,10 @@ I will discuss how I implemented the more difficult elements (like the parser, i
 Keep your progress up to date below. Put "DONE" after each section, when you have done it.  
 The number in brackets represents the component that each element contributes to.
 # Checkpoint
-#### 1 Version Control (1) 
+#### 1 Version Control (1) COMPLETED
 	At least two documented commits to provided on GitHub Classroom BEFORE 12pm 10th October. DONE
 	At least 5 documented commits. DONE
-	Readme.md file filled in correctly.
+	Readme.md file filled in correctly. DONE
 #### 2 Unit Tests for basic drawing commands above (1) 
 	Unit Test for moveto command (variables storing pen position are correct)
 	Unit Test for drawTo command (variables storing pen position are correct)
@@ -22,13 +22,13 @@ The number in brackets represents the component that each element contributes to
 #### 3 XML Comments/documentation produced (1) 
 	Fully documented with XML comments and Documentation web site produced 
 #### 4 Exception Handling (1) 
-#### 5 Library (DLL) installed and working with reasonable user interface (2)
-	Form interface with program window, output window and run button
-	BOOSE DLL library installed 
+#### 5 Library (DLL) installed and working with reasonable user interface (2) COMPLETED
+	Form interface with program window, output window and run button DONE
+	BOOSE DLL library installed DONE
 	call about method and display returned information in output/debug window
-	you can use System.Diagnostics to output to the debug window
+	you can use System.Diagnostics to output to the debug window DONE
 #### 6 Basic drawing commands of the library are implemented (2)
-	Moveto, circle, rect, pencolour, write.
+	Moveto, circle, rect, pencolour, write. DONE
 	Unrestricted drawing programs can be run (1unrestrictedDrawing.boose)
 
 ### [You MUST fill in the this form before submission and submit your zipped up project to myBeckett](https://forms.gle/MJB6vEbgAPXC6A6G8)

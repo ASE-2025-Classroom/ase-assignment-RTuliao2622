@@ -7,6 +7,9 @@ namespace BOOSEapp
     public partial class Form1 : Form
     {
         private AppCanvas canvas;
+        ///<summary>
+        /// Initializes the form and sets up the drawing canvas.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -16,12 +19,18 @@ namespace BOOSEapp
             canvasBox.Image = (Bitmap)canvas.getBitmap();
         }
 
+        /// <summary>
+        /// Click event for the clear button.
+        /// </summary>
         private void clearButton_Click(object sender, EventArgs e)
         {
             canvas.Clear();
             canvasBox.Image = (Bitmap)canvas.getBitmap();
         }
 
+        /// <summary>
+        /// Click event for the run button.
+        /// </summary>
         private void runButton_Click(object sender, EventArgs e)
         {
             canvas.SetColour(255, 0, 0);
