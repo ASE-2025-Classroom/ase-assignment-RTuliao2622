@@ -6,7 +6,7 @@ namespace BOOSEApp
     /// <summary>
     /// Canvas implementation for BOOSE drawing commands.
     /// </summary>
-    public class AppCanvas : ICanvas
+    internal class AppCanvas : ICanvas
     {
         /// <summary>
         /// Gets or sets the current X position of the pen.

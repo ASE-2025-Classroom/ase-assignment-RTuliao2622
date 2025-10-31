@@ -3,6 +3,9 @@ using BOOSEApp;
 
 namespace BOOSEapp
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class Form2 : Form
     {
         private AppCanvas canvas;
