@@ -21,7 +21,17 @@ namespace BOOSEApp
         /// <summary>
         /// Gets or sets the current pen colour.
         /// </summary>
-        public object PenColour { get => penColour; set => penColour = (Color)value; }
+        public object PenColour
+        {
+            get => penColour;
+            set
+            {
+                if (value is Color color)
+                    penColour = color;
+                else
+                    throw new InvalidCastException("PenColour must be an actual colour");
+            }
+        }
 
         private int xpos;
         private int ypos;
@@ -36,6 +46,9 @@ namespace BOOSEApp
         /// <param name="height">The height of the canvas in pixels.</param>
         public AppCanvas(int width, int height)
         {
+            if (width <= 0 || height <= 0)
+                throw new ArgumentException("Canvas dimensions must be positive.");
+
             bitmap = new Bitmap(width, height);
             graphics = Graphics.FromImage(bitmap);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -49,20 +62,27 @@ namespace BOOSEApp
         /// <param name="filled">Whether the circle should be filled.</param>
         public void Circle(int radius, bool filled)
         {
+            if (radius <= 0)
+                throw new ArgumentException("Circle radius must be positive.");
+            EnsureGraphics();
+
             var rect = new Rectangle(xpos - radius, ypos - radius, radius * 2, radius * 2);
-            if (filled)
+            try
             {
-                using (var brush = new SolidBrush(penColour))
+                if (filled)
                 {
+                    using var brush = new SolidBrush(penColour);
                     graphics.FillEllipse(brush, rect);
                 }
-            }
-            else
-            {
-                using (var pen = new Pen(penColour))
+                else
                 {
+                    using var pen = new Pen(penColour);
                     graphics.DrawEllipse(pen, rect);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to draw circle: " + ex.Message);
             }
         }
 
@@ -71,6 +91,7 @@ namespace BOOSEApp
         /// </summary>
         public void Clear()
         {
+            EnsureGraphics();
             graphics.Clear(Color.White);
         }
 
@@ -81,12 +102,18 @@ namespace BOOSEApp
         /// <param name="y">The Y coordinate to draw to.</param>
         public void DrawTo(int x, int y)
         {
-            using (var pen = new Pen(penColour))
+            EnsureGraphics();
+            try
             {
+                using var pen = new Pen(penColour);
                 graphics.DrawLine(pen, xpos, ypos, x, y);
+                xpos = x;
+                ypos = y;
             }
-            xpos = x;
-            ypos = y;
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to draw line: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -95,6 +122,8 @@ namespace BOOSEApp
         /// <returns>The bitmap containing all drawn content.</returns>
         public object getBitmap()
         {
+            if (bitmap == null)
+                throw new InvalidOperationException("Canvas bitmap is not initialized.");
             return bitmap;
         }
 
@@ -117,20 +146,27 @@ namespace BOOSEApp
         /// <param name="filled">Whether the rectangle should be filled.</param>
         public void Rect(int width, int height, bool filled)
         {
+            if (width <= 0 || height <= 0)
+                throw new ArgumentException("Rectangle dimensions must be positive.");
+            EnsureGraphics();
+
             var rect = new Rectangle(xpos, ypos, width, height);
-            if (filled)
+            try
             {
-                using (var brush = new SolidBrush(penColour))
+                if (filled)
                 {
+                    using var brush = new SolidBrush(penColour);
                     graphics.FillRectangle(brush, rect);
                 }
-            }
-            else
-            {
-                using (var pen = new Pen(penColour))
+                else
                 {
+                    using var pen = new Pen(penColour);
                     graphics.DrawRectangle(pen, rect);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to draw rectangle: " + ex.Message);
             }
         }
 
@@ -151,8 +187,11 @@ namespace BOOSEApp
         /// <param name="height">The new height of the canvas.</param>
         public void Set(int width, int height)
         {
-            graphics.Dispose();
-            bitmap.Dispose();
+            if (width <= 0 || height <= 0)
+                throw new ArgumentException("Canvas dimensions must be positive.");
+
+            graphics?.Dispose();
+            bitmap?.Dispose();
 
             bitmap = new Bitmap(width, height);
             graphics = Graphics.FromImage(bitmap);
@@ -168,6 +207,9 @@ namespace BOOSEApp
         /// <param name="blue">Blue component (0–255).</param>
         public void SetColour(int red, int green, int blue)
         {
+            if (!IsValidRGB(red) || !IsValidRGB(green) || !IsValidRGB(blue))
+                throw new ArgumentOutOfRangeException("RGB values must be between 0 and 255.");
+
             penColour = Color.FromArgb(red, green, blue);
         }
 
@@ -178,15 +220,25 @@ namespace BOOSEApp
         /// <param name="height">The height of the triangle.</param>
         public void Tri(int width, int height)
         {
+            if (width <= 0 || height <= 0)
+                throw new ArgumentException("Triangle dimensions must be positive.");
+            EnsureGraphics();
+
             Point[] points = new Point[]
             {
                 new Point(xpos, ypos),
                 new Point(xpos + width, ypos),
                 new Point(xpos + width / 2, ypos - height)
             };
-            using (var pen = new Pen(penColour))
+
+            try
             {
+                using var pen = new Pen(penColour);
                 graphics.DrawPolygon(pen, points);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to draw triangle: " + ex.Message);
             }
         }
 
@@ -196,11 +248,34 @@ namespace BOOSEApp
         /// <param name="text">The text to write.</param>
         public void WriteText(string text)
         {
-            using (var font = new Font("Arial", 20))
-            using (var brush = new SolidBrush(penColour))
+            if (string.IsNullOrWhiteSpace(text))
+                throw new ArgumentException("Text cannot be empty.");
+            EnsureGraphics();
+
+            try
             {
+                using var font = new Font("Arial", 20);
+                using var brush = new SolidBrush(penColour);
                 graphics.DrawString(text, font, brush, xpos, ypos);
             }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to write text: " + ex.Message);
+            }
         }
+
+        /// <summary>
+        /// Ensures the graphics object is initialized before drawing.
+        /// </summary>
+        private void EnsureGraphics()
+        {
+            if (graphics == null)
+                throw new InvalidOperationException("Canvas graphics are not initialized.");
+        }
+
+        /// <summary>
+        /// Validates RGB is within the 0–255 range.
+        /// </summary>
+        private bool IsValidRGB(int value) => value >= 0 && value <= 255;
     }
 }
